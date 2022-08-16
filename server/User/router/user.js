@@ -1,7 +1,6 @@
 const express=require('express')
 const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
-const crypto=require('crypto')
 const SignupModel=require("../models/signup")
 
 
@@ -37,11 +36,15 @@ router.post("/register", (req,res)=> {
 
 })
 
-let secretkey= crypto.randomBytes(64).toString("hex")
+
 
 
 router.post("/login", (req,res)=> {
     let {email, password} =req.body
+
+    if (!email || !password) {
+        res.status(400).send("Plzz fill the required Field")
+    }
 
     SignupModel.findOne({email}).then((exist)=> {
         if (exist){
@@ -49,7 +52,7 @@ router.post("/login", (req,res)=> {
 
 
                 if (check){
-                    let auth=jwt.sign(exist.email,secretkey)
+                    let auth=jwt.sign(exist.email, process.env.Secret_key)
                     res.status(200).send(auth)
                 }
                 else {

@@ -1,6 +1,8 @@
 const express=require("express")
 const mongoose=require('mongoose')
 const bcrypt=require('bcryptjs')
+const cors=require('cors')
+require('dotenv').config();
 const userController=require("./User/router/user")
 const orderController=require('./User/router/order')
 const cartController=require('./User/router/cart')
@@ -11,10 +13,13 @@ const app=express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
+app.use(cors())
 
 
 // Databse Connection
-const db="mongodb+srv://Shadab:Shadab786@cluster0.55j0kfh.mongodb.net/E_Commerce?retryWrites=true&w=majority"
+//const db="mongodb+srv://Shadab:Shadab786@cluster0.55j0kfh.mongodb.net/E_Commerce?retryWrites=true&w=majority"
+
+const db='mongodb://localhost:27017/E-commerce'
 
 mongoose.connect(db).then(()=> {
     console.log("Database Connected")
