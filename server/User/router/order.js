@@ -1,7 +1,17 @@
 const express = require("express");
+const jwt=require('jsonwebtoken')
 const orderModel = require("../models/ordermodel");
 
 const router = express.Router();
+
+
+router.get('/', (req,res)=> {
+    const user = jwt.verify(req.headers.authorization, process.env.Secret_key)
+    res.send(user)
+    
+})
+
+
 
 router.post("/add", (req, res) => {
     const { email, order_id, order_type, item_id} = req.body;

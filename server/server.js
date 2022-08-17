@@ -1,6 +1,7 @@
 const express=require("express")
 const mongoose=require('mongoose')
 const bcrypt=require('bcryptjs')
+const jwt=require('jsonwebtoken')
 const cors=require('cors')
 require('dotenv').config();
 const userController=require("./User/router/user")
@@ -10,10 +11,25 @@ const itemController=require('./User/router/item')
 
 const app=express()
 
+const protectRoutes=['/user/login', '/user/register']
+
 
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(cors())
+
+// app.use((req,res, next)=> {
+//     protectRoutes.forEach((route)=> {
+//         if (req.url===route) {
+//             next()
+//         }
+//         else {
+//             const user=jwt.verify(req.headers.authorization, process.env.Secret_key)
+            
+//         }
+//     })
+//     next()
+// })
 
 
 // Databse Connection

@@ -26,7 +26,7 @@ const Signin = () => {
             url:"http://localhost:3001/user/login",
             data:data
         }).then((token)=> {
-            localStorage.setItem("Token",token.data)
+            localStorage.setItem("authorization",token.data)
              navigate("/main")
         }).catch((err)=> {
             console.log(err)
